@@ -1,7 +1,8 @@
 class MyCircularQueue {
   constructor(k) {
     this.queue = Array(k);
-    this.len = k;
+    this.k = k;
+    this.length = 0; // length of items having value
     this.front = 0;
     this.rear = 0;
   }
@@ -10,7 +11,8 @@ class MyCircularQueue {
       return false;
     }
     this.queue[this.rear] = value;
-    this.rear = (this.rear + 1) % this.len;
+    this.rear = (this.rear + 1) % this.k;
+    this.length += 1;
     return true;
   }
   deQueue() {
@@ -18,7 +20,8 @@ class MyCircularQueue {
       return false;
     }
     delete this.queue[this.front];
-    this.front = (this.front + 1) % this.len;
+    this.front = (this.front + 1) % this.k;
+    this.length -= 1;
     return true;
   }
   Front() {
@@ -27,13 +30,13 @@ class MyCircularQueue {
   Rear() {
     return this.isEmpty()
       ? -1
-      : this.queue[this.rear === 0 ? this.len - 1 : this.rear - 1];
+      : this.queue[this.rear === 0 ? this.k - 1 : this.rear - 1];
   }
   isEmpty() {
-    return this.front === this.rear && !this.queue[this.front];
+    return this.length === 0;
   }
   isFull() {
-    return this.front === this.rear && !!this.queue[this.front];
+    return this.length === this.k;
   }
 }
 
